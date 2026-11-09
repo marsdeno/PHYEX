@@ -89,15 +89,41 @@ MODULE MODD_NSV
   IMPLICIT NONE
 
   TYPE NSV_t
-    SEQUENCE
     INTEGER, DIMENSION(JPMODELMAX) :: NSV_LGBEG_A
     INTEGER, DIMENSION(JPMODELMAX) :: NSV_LGEND_A
     INTEGER :: NSV_LGBEG
     INTEGER :: NSV_LGEND
+    INTEGER :: NSV = 0
+    INTEGER :: NSV_LIMA = 0
   END TYPE NSV_t
 
   INTEGER :: NSV_LGBEG = 0
   INTEGER :: NSV_LGEND = 0
+  INTEGER :: NSV_CHEM = 0
+  INTEGER :: NSV_CHEMBEG = 0
+  INTEGER :: NSV_CHEMEND = 0
+  INTEGER :: NSV_CHEM_LIST = 0
+  INTEGER :: NSV_AER = 0
+  INTEGER :: NSV_AERBEG = 0
+  INTEGER :: NSV_AEREND = 0
+  INTEGER :: NSV_DST = 0
+  INTEGER :: NSV_DSTBEG = 0
+  INTEGER :: NSV_DSTEND = 0
+  INTEGER :: NSV_DSTDEP = 0
+  INTEGER :: NSV_DSTDEPBEG = 0
+  INTEGER :: NSV_DSTDEPEND = 0
+  INTEGER :: NSV_SLTBEG = 0
+  INTEGER :: NSV_SLTEND = 0
+  INTEGER :: NSV_CO = 0
+  INTEGER :: NSV = 0
+  INTEGER :: NSV_CO2 = 0
+  CHARACTER(LEN=16), DIMENSION(:), POINTER :: CSV => NULL()
+  INTEGER :: NSV_LIMA_NC = 0
+  INTEGER :: NSV_LIMA_NR = 0
+  INTEGER :: NSV_LIMA_NI = 0
+  INTEGER :: NSV_LIMA_CCN_FREE = 0
+  INTEGER :: NSV_LIMA_IFN_FREE = 0
+  INTEGER :: NSV_LIMA = 0
 CONTAINS
   SUBROUTINE NSV_ASSOCIATE()
   END SUBROUTINE NSV_ASSOCIATE
@@ -149,6 +175,9 @@ MODULE MODD_CONVPAREXT
     INTEGER :: JCVEXB
     INTEGER :: JCVEXT
   END TYPE CONVPAREXT
+
+  INTEGER :: JCVEXB = 0
+  INTEGER :: JCVEXT = 0
 END MODULE MODD_CONVPAREXT
 
 MODULE MODD_CONVPAR_SHAL
@@ -183,7 +212,28 @@ MODULE MODD_CTURB
 
   TYPE CSTURB_t
     SEQUENCE
-  END TYPE CSTURB_t
+      REAL :: XCEP = 0.
+    REAL :: XCMFS = 0.
+    REAL :: XCED = 0.
+    REAL :: XCHF = 0.
+    REAL :: XCHV = 0.
+    REAL :: XCSHF = 0.
+    REAL :: XCHT1 = 0.
+    REAL :: XCHT2 = 0.
+    REAL :: XCTV = 0.
+    REAL :: XCTD = 0.
+    REAL :: XCTP = 0.
+    REAL :: XBL89EXP = 0.
+    REAL :: XUSRBL89 = 0.
+    REAL :: XCPR1 = 0.
+    REAL :: XCPR2 = 0.
+    REAL :: XCPR3 = 0.
+    REAL :: XCPR4 = 0.
+    REAL :: XCPR5 = 0.
+    REAL :: XPHI_LIM = 0.
+    REAL :: XCET = 0.
+    REAL :: XA0 = 0.
+END TYPE CSTURB_t
 END MODULE MODD_CTURB
 
 MODULE MODD_TURB_n
@@ -201,6 +251,19 @@ MODULE MODD_TURB_n
     REAL :: XCEI_MIN
     REAL :: XCEI_MAX
     REAL :: XCOEF_AMPL_SAT
+    REAL :: XLINI = 0.
+    REAL :: XCED = 0.
+    REAL :: XCTP = 0.
+    REAL :: XBL89EXP = 0.
+    REAL :: XUSRBL89 = 0.
+    REAL :: XCTV = 0.
+    REAL :: XCHV = 0.
+    REAL :: XCHF = 0.
+    REAL :: XCSHF = 0.
+    REAL :: XCHT1 = 0.
+    REAL :: XCHT2 = 0.
+    REAL :: XCPR1 = 0.
+    LOGICAL :: LBL89EXP = .FALSE.
   END TYPE TURB_t
 END MODULE MODD_TURB_n
 
@@ -208,11 +271,12 @@ MODULE MODD_NEB_n
   IMPLICIT NONE
 
   TYPE NEB_t
-    SEQUENCE
     LOGICAL :: LSUBG_COND
     LOGICAL :: LSIGMAS
     LOGICAL :: LSTATNW
     REAL :: VSIGQSAT
+    CHARACTER(LEN=80) :: CCONDENS = ' '
+    CHARACTER(LEN=80) :: CLAMBDA3 = ' '
   END TYPE NEB_t
 END MODULE MODD_NEB_n
 
@@ -224,26 +288,68 @@ MODULE MODD_PARAM_MFSHALL_N
     CHARACTER(LEN=4) :: CMF_UPDRAFT
     CHARACTER(LEN=4) :: CMF_CLOUD
     LOGICAL :: LMIXUV
-  END TYPE PARAM_MFSHALL_t
+      REAL :: XABUO = 0.
+    REAL :: XBDETR = 0.
+    REAL :: XENTR_DRY = 0.
+    REAL :: XCMF = 0.
+    REAL :: XPHI_LIM = 0.
+    REAL :: XCET = 0.
+    REAL :: XLINI = 0.
+END TYPE PARAM_MFSHALL_t
 END MODULE MODD_PARAM_MFSHALL_N
 
 MODULE MODD_PARAM_ICE_n
   IMPLICIT NONE
 
   TYPE PARAM_ICE_t
-    SEQUENCE
     LOGICAL :: LOCND2
+    LOGICAL :: LRED = .FALSE.
+    LOGICAL :: LCRYSTAL_SHAPE = .FALSE.
+    INTEGER :: NNB_CRYSTAL_SHAPE = 0
+    LOGICAL :: LWARM = .TRUE.
+    LOGICAL :: LSEDIC = .TRUE.
+    LOGICAL :: LMODICEDEP = .FALSE.
+    LOGICAL :: LKOGAN = .FALSE.
+    CHARACTER(LEN=10) :: CSEDIM = ' '
+    CHARACTER(LEN=10) :: CSUBG_AUCV_RC = ' '
+    LOGICAL :: LMFCONV = .FALSE.
+    REAL :: XCRIAUTI_NAM = 0.
+    REAL :: XCRIAUTC_NAM = 0.
+    REAL :: XBCRIAUTI_NAM = 0.
+    REAL :: XACRIAUTI_NAM = 0.
+    REAL :: XT0CRIAUTI_NAM = 0.
+    LOGICAL :: LCRIAUTI = .FALSE.
   END TYPE PARAM_ICE_t
+
+  LOGICAL :: LCRYSTAL_SHAPE = .FALSE.
+  INTEGER :: NNB_CRYSTAL_SHAPE = 0
+  LOGICAL :: LMFCONV = .FALSE.
 END MODULE MODD_PARAM_ICE_n
 
 MODULE MODD_RAIN_ICE_PARAM_n
+  USE MODD_PARAMETERS, ONLY: JPMODELMAX
   IMPLICIT NONE
 
   TYPE RAIN_ICE_PARAM_t
-    SEQUENCE
     REAL, DIMENSION(32) :: XFRMIN
     REAL :: TIWMX
+    REAL, DIMENSION(2) :: XFSEDC
+    REAL :: XFSEDR, XEXSEDR
+    REAL :: XTIMAUTC, XCRIAUTC
+    REAL :: XFCACCR, XEXCACCR
+    REAL :: XCRIAUTI = 0.
+    REAL :: XBCRIAUTI = 0.
+    REAL :: XACRIAUTI = 0.
+    REAL :: XT0CRIAUTI = 0.
   END TYPE RAIN_ICE_PARAM_t
+
+  TYPE(RAIN_ICE_PARAM_t), DIMENSION(JPMODELMAX), TARGET, SAVE :: RAIN_ICE_PARAM_MODEL
+  TYPE(RAIN_ICE_PARAM_t), POINTER, SAVE :: RAIN_ICE_PARAMN => NULL()
+
+  REAL, DIMENSION(:), POINTER :: XFSEDC => NULL()
+  REAL, POINTER :: XFSEDR => NULL(), XEXSEDR => NULL()
+  REAL, POINTER :: XTIMAUTC => NULL(), XCRIAUTC => NULL()
+  REAL, POINTER :: XFCACCR => NULL(), XEXCACCR => NULL()
 END MODULE MODD_RAIN_ICE_PARAM_n
 
 MODULE MODD_CLOUDPAR_N
@@ -258,6 +364,7 @@ END MODULE MODD_CLOUDPAR_N
 MODULE MODD_BUDGET
   IMPLICIT NONE
 
+  INTEGER, PARAMETER :: NBUDGET_RI = 6
   INTEGER, PARAMETER :: NBUDGET_RH = 12
   INTEGER, PARAMETER :: NBUDGET_SV1 = 13
 
@@ -392,6 +499,7 @@ MODULE MODD_MISC
     LOGICAL :: ODEEPOC
     LOGICAL :: OCOUPLES
     LOGICAL :: OBLOWSNOW
+    LOGICAL :: LMFCONV = .FALSE.
     REAL :: XRSNOW
     CHARACTER(LEN=4), DIMENSION(2) :: HLBCX
     CHARACTER(LEN=4), DIMENSION(2) :: HLBCY
@@ -449,15 +557,15 @@ MODULE MODD_LES
     LOGICAL :: LLES_CALL = .FALSE.
   END TYPE TLES_T
 
-  TYPE(TLES_T), DIMENSION(JPMODELMAX), TARGET :: TLES
+  TYPE(TLES_T), TARGET, SAVE :: TLES
 
 CONTAINS
 
   SUBROUTINE LES_ASSOCIATE(KMI, TPLES)
-    INTEGER, INTENT(IN) :: KMI
-    TYPE(TLES_T), POINTER, INTENT(OUT) :: TPLES
+    INTEGER, INTENT(IN), OPTIONAL :: KMI
+    TYPE(TLES_T), POINTER, INTENT(OUT), OPTIONAL :: TPLES
 
-    TPLES => TLES(KMI)
+    IF (PRESENT(TPLES)) TPLES => TLES
   END SUBROUTINE LES_ASSOCIATE
 END MODULE MODD_LES
 
@@ -662,9 +770,751 @@ CONTAINS
   END SUBROUTINE TURB
 END MODULE MODI_TURB
 
+
+MODULE MODI_GAMMA
+  IMPLICIT NONE
+  INTERFACE GAMMA
+    PURE FUNCTION GAMMA_X0D(PX) RESULT(PGAMMA)
+      IMPLICIT NONE
+      REAL, INTENT(IN) :: PX
+      REAL :: PGAMMA
+    END FUNCTION GAMMA_X0D
+    PURE FUNCTION GAMMA_X1D(PX) RESULT(PGAMMA)
+      IMPLICIT NONE
+      REAL, DIMENSION(:), INTENT(IN) :: PX
+      REAL, DIMENSION(SIZE(PX)) :: PGAMMA
+    END FUNCTION GAMMA_X1D
+  END INTERFACE GAMMA
+END MODULE MODI_GAMMA
+
+MODULE MODI_GAMMA_INC
+  IMPLICIT NONE
+  INTERFACE
+    FUNCTION GAMMA_INC(PA,PX) RESULT(PGAMMA_INC)
+      IMPLICIT NONE
+      REAL, INTENT(IN) :: PA
+      REAL, INTENT(IN) :: PX
+      REAL :: PGAMMA_INC
+    END FUNCTION GAMMA_INC
+  END INTERFACE
+END MODULE MODI_GAMMA_INC
+
+
+MODULE MODD_CONF
+  IMPLICIT NONE
+  CHARACTER(LEN=6), SAVE :: CPROGRAM = '      '
+  LOGICAL, SAVE :: LCARTESIAN = .FALSE.
+  CHARACTER(LEN=5), SAVE :: CCONF = '     '
+  LOGICAL, SAVE :: L1D = .FALSE.
+  LOGICAL, SAVE :: L2D = .FALSE.
+  LOGICAL, SAVE :: LFLAT = .FALSE.
+  LOGICAL, SAVE :: LTHINSHELL = .FALSE.
+  INTEGER, SAVE :: NVERB = 0
+  INTEGER, SAVE :: NMODEL = 0
+  CHARACTER(LEN=3), SAVE :: CEQNSYS = '   '
+  CHARACTER(LEN=32), SAVE :: CEXP = ' '
+  CHARACTER(LEN=32), SAVE :: CSEG = ' '
+  LOGICAL, SAVE :: LLG = .FALSE.
+  LOGICAL, SAVE :: LINIT_LG = .FALSE.
+  LOGICAL, SAVE :: LNOMIXLG = .FALSE.
+END MODULE MODD_CONF
+
 MODULE phyex_minimal_mod
   IMPLICIT NONE
 CONTAINS
   SUBROUTINE phyex_minimal_ping()
   END SUBROUTINE phyex_minimal_ping
 END MODULE phyex_minimal_mod
+
+MODULE MODD_RAIN_ICE_DESCR_n
+  USE MODD_PARAMETERS, ONLY: JPMODELMAX
+  IMPLICIT NONE
+  TYPE RAIN_ICE_DESCR_t
+    REAL :: XCEXVT
+    REAL :: XAC,XBC,XCC,XDC
+    REAL :: XAR,XBR,XCR,XDR,XCCR,XF0R,XF1R,XC1R
+    REAL :: XAI,XBI,XC_I,XDI,XF0I,XF2I,XC1I
+    REAL :: XAS,XBS,XCS,XDS,XCCS,XCXS,XF0S,XF1S,XC1S
+    REAL :: XAG,XBG,XCG,XDG,XCCG,XCXG,XF0G,XF1G,XC1G
+    REAL :: XAH,XBH,XCH,XDH,XCCH,XCXH,XF0H,XF1H,XC1H
+    REAL :: XALPHAC,XNUC,XALPHAC2,XNUC2,XLBEXC
+    REAL,DIMENSION(2) :: XLBC
+    REAL :: XALPHAR,XNUR,XLBEXR,XLBR
+    REAL :: XALPHAI,XNUI,XLBEXI,XLBI
+    REAL :: XALPHAS,XNUS,XLBEXS,XLBS,XNS
+    REAL :: XALPHAG,XNUG,XLBEXG,XLBG
+    REAL :: XALPHAH,XNUH,XLBEXH,XLBH
+    REAL :: XFVELOS
+    REAL :: XTRANS_MP_GAMMAS
+    REAL :: XLBDAR_MAX,XLBDAS_MIN,XLBDAS_MAX,XLBDAG_MAX
+    REAL,DIMENSION(:),ALLOCATABLE :: XRTMIN
+    REAL :: XCONC_SEA
+    REAL :: XCONC_LAND
+    REAL :: XCONC_URBAN
+  END TYPE RAIN_ICE_DESCR_t
+
+  TYPE(RAIN_ICE_DESCR_t), DIMENSION(JPMODELMAX), TARGET, SAVE :: RAIN_ICE_DESCR_MODEL
+  TYPE(RAIN_ICE_DESCR_t), POINTER, SAVE :: RAIN_ICE_DESCRN => NULL()
+
+  REAL,DIMENSION(:),POINTER :: XLBC=>NULL(), XRTMIN=>NULL()
+  REAL, POINTER :: XCEXVT=>NULL(), XAC=>NULL(), XBC=>NULL(), XCC=>NULL(), XDC=>NULL()
+  REAL, POINTER :: XAR=>NULL(), XBR=>NULL(), XCR=>NULL(), XDR=>NULL(), XCCR=>NULL()
+  REAL, POINTER :: XF0R=>NULL(), XF1R=>NULL(), XC1R=>NULL()
+  REAL, POINTER :: XAI=>NULL(), XBI=>NULL(), XC_I=>NULL(), XDI=>NULL()
+  REAL, POINTER :: XF0I=>NULL(), XF2I=>NULL(), XC1I=>NULL()
+  REAL, POINTER :: XAS=>NULL(), XBS=>NULL(), XCS=>NULL(), XDS=>NULL()
+  REAL, POINTER :: XCCS=>NULL(), XCXS=>NULL(), XF0S=>NULL(), XF1S=>NULL(), XC1S=>NULL()
+  REAL, POINTER :: XAG=>NULL(), XBG=>NULL(), XCG=>NULL(), XDG=>NULL()
+  REAL, POINTER :: XCCG=>NULL(), XCXG=>NULL(), XF0G=>NULL(), XF1G=>NULL(), XC1G=>NULL()
+  REAL, POINTER :: XAH=>NULL(), XBH=>NULL(), XCH=>NULL(), XDH=>NULL()
+  REAL, POINTER :: XCCH=>NULL(), XCXH=>NULL(), XF0H=>NULL(), XF1H=>NULL(), XC1H=>NULL()
+  REAL, POINTER :: XALPHAC=>NULL(), XNUC=>NULL(), XALPHAC2=>NULL(), XNUC2=>NULL(), XLBEXC=>NULL()
+  REAL, POINTER :: XALPHAR=>NULL(), XNUR=>NULL(), XLBEXR=>NULL(), XLBR=>NULL()
+  REAL, POINTER :: XALPHAI=>NULL(), XNUI=>NULL(), XLBEXI=>NULL(), XLBI=>NULL()
+  REAL, POINTER :: XALPHAS=>NULL(), XNUS=>NULL(), XNS=>NULL(), XLBEXS=>NULL(), XLBS=>NULL()
+  REAL, POINTER :: XALPHAG=>NULL(), XNUG=>NULL(), XLBEXG=>NULL(), XLBG=>NULL()
+  REAL, POINTER :: XALPHAH=>NULL(), XNUH=>NULL(), XLBEXH=>NULL(), XLBH=>NULL()
+  REAL, POINTER :: XLBDAR_MAX=>NULL(), XLBDAS_MAX=>NULL(), XLBDAG_MAX=>NULL()
+  REAL, POINTER :: XCONC_SEA=>NULL(), XCONC_LAND=>NULL(), XCONC_URBAN=>NULL()
+  REAL, POINTER :: XFVELOS=>NULL(), XTRANS_MP_GAMMAS=>NULL(), XLBDAS_MIN=>NULL()
+END MODULE MODD_RAIN_ICE_DESCR_n
+
+MODULE MODD_PARAM_LIMA
+  IMPLICIT NONE
+  TYPE PARAM_LIMA_t
+    INTEGER :: NMOD_CCN = 0
+    INTEGER :: NMOD_IFN = 0
+    INTEGER :: NMOM_C = 0
+    INTEGER :: NMOM_I = 0
+    INTEGER :: NMOM_R = 0
+    CHARACTER(LEN=4) :: CCONDENS = '    '
+    CHARACTER(LEN=4) :: CLAMBDA3 = '    '
+    LOGICAL :: LMFCONV = .FALSE.
+  END TYPE PARAM_LIMA_t
+
+  INTEGER :: NMOD_CCN = 0
+  INTEGER :: NMOD_IFN = 0
+  INTEGER :: NMOM_C = 0
+  INTEGER :: NMOM_I = 0
+  INTEGER :: NMOM_R = 0
+END MODULE MODD_PARAM_LIMA
+
+MODULE MODD_PARAM_LIMA_WARM
+  IMPLICIT NONE
+  TYPE PARAM_LIMA_WARM_t
+    INTEGER :: IDUMMY
+  END TYPE PARAM_LIMA_WARM_t
+END MODULE MODD_PARAM_LIMA_WARM
+
+MODULE MODD_PARAM_LIMA_COLD
+  IMPLICIT NONE
+  TYPE PARAM_LIMA_COLD_t
+    REAL :: XAS = 0., XBS = 0.
+    REAL :: XAI = 0., XBI = 0.
+    REAL :: XAI_SHAPE = 0., XBI_SHAPE = 0.
+  END TYPE PARAM_LIMA_COLD_t
+
+  REAL :: XAS = 0., XBS = 0.
+  REAL :: XAI = 0., XBI = 0.
+  REAL :: XAI_SHAPE = 0., XBI_SHAPE = 0.
+  LOGICAL :: LCRYSTAL_SHAPE = .FALSE.
+  INTEGER :: NNB_CRYSTAL_SHAPE = 0
+END MODULE MODD_PARAM_LIMA_COLD
+
+MODULE MODD_PARAM_LIMA_MIXED
+  IMPLICIT NONE
+  TYPE PARAM_LIMA_MIXED_t
+    REAL :: XAG = 0., XBG = 0.
+    REAL :: XAH = 0., XBH = 0.
+  END TYPE PARAM_LIMA_MIXED_t
+
+  REAL :: XAG = 0., XBG = 0.
+  REAL :: XAH = 0., XBH = 0.
+END MODULE MODD_PARAM_LIMA_MIXED
+
+MODULE MODD_ELEC_DESCR
+  IMPLICIT NONE
+  TYPE ELEC_DESCR_t
+    INTEGER :: IDUMMY
+  END TYPE ELEC_DESCR_t
+END MODULE MODD_ELEC_DESCR
+
+MODULE MODD_ELEC_PARAM
+  IMPLICIT NONE
+  TYPE ELEC_PARAM_t
+    INTEGER :: IDUMMY
+  END TYPE ELEC_PARAM_t
+END MODULE MODD_ELEC_PARAM
+
+!     ######################
+      MODULE MODI_ICE_ADJUST
+!     ######################
+!
+IMPLICIT NONE
+INTERFACE
+!
+      SUBROUTINE ICE_ADJUST (D, CST, ICEP, NEBN, TURBN, PARAMI, BUCONF, KRR,   &
+                            &HBUNAME,                                          &
+                            &PTSTEP, PSIGQSAT,                                 &
+                            &PRHODJ, PEXNREF, PRHODREF, PSIGS, LMFCONV, PMFCONV,&
+                            &PPABST, PZZ,                                      &
+                            &PEXN, PCF_MF, PRC_MF, PRI_MF, PWEIGHT_MF_CLOUD,   &
+                            &PICLDFR, PWCLDFR, PSSIO, PSSIU, PIFR,             &
+                            &PRV, PRC, PRVS, PRCS, PTH, PTHS,                  &
+                            &OCOMPUTE_SRC, PSRCS, PCLDFR,                      &
+                            &PRR, PRI, PRIS, PRS, PRG, TBUDGETS, KBUDGETS,     &
+                            &PICE_CLD_WGT,                                     &
+                            &PRH,                                              &
+                            &POUT_RV, POUT_RC, POUT_RI, POUT_TH,               &
+                            &PHLC_HRC, PHLC_HCF, PHLI_HRI, PHLI_HCF,           &
+                            &PHLC_HRC_MF, PHLC_HCF_MF, PHLI_HRI_MF, PHLI_HCF_MF)
+USE MODD_BUDGET,         ONLY: TBUDGETDATA_PTR, TBUDGETCONF_T
+USE MODD_CST,            ONLY: CST_t
+USE MODD_RAIN_ICE_PARAM_n, ONLY: RAIN_ICE_PARAM_t
+USE MODD_NEB_n,          ONLY: NEB_t
+USE MODD_TURB_n,         ONLY: TURB_t
+USE MODD_PARAM_ICE_n,    ONLY: PARAM_ICE_t
+USE MODD_DIMPHYEX,       ONLY: DIMPHYEX_t
+IMPLICIT NONE
+!
+!
+!*       0.1   Declarations of dummy arguments :
+!
+!
+TYPE(DIMPHYEX_t),         INTENT(IN)    :: D
+TYPE(CST_t),              INTENT(IN)    :: CST
+TYPE(RAIN_ICE_PARAM_t),   INTENT(IN)    :: ICEP
+TYPE(NEB_t),              INTENT(IN)    :: NEBN
+TYPE(TURB_t),             INTENT(IN)    :: TURBN
+TYPE(PARAM_ICE_t),        INTENT(IN)    :: PARAMI
+TYPE(TBUDGETCONF_t),      INTENT(IN)    :: BUCONF
+INTEGER,                  INTENT(IN)    :: KRR      ! Number of moist variables
+CHARACTER(LEN=4),         INTENT(IN)    :: HBUNAME  ! Name of the budget
+REAL,                     INTENT(IN)   :: PTSTEP    ! Double Time step
+                                                    ! (single if cold start)
+REAL, DIMENSION(D%NIJT),       INTENT(IN)    :: PSIGQSAT  ! coeff applied to qsat variance contribution
+!
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    ::  PRHODJ  ! Dry density * Jacobian
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    ::  PEXNREF ! Reference Exner function
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    ::  PRHODREF
+!
+REAL, DIMENSION(MERGE(D%NIJT,0,NEBN%LSUBG_COND),&
+                MERGE(D%NKT,0,NEBN%LSUBG_COND)),           INTENT(IN)    ::  PSIGS   ! Sigma_s at time t
+LOGICAL,                                              INTENT(IN)    ::  LMFCONV ! =SIZE(PMFCONV)!=0
+REAL, DIMENSION(MERGE(D%NIJT,0,LMFCONV),&
+                MERGE(D%NKT,0,LMFCONV)),              INTENT(IN)   ::  PMFCONV ! convective mass flux
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    ::  PPABST  ! Absolute Pressure at t
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    ::  PZZ     ! height of model layer
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    ::  PEXN    ! Exner function
+!
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    :: PCF_MF   ! Convective Mass Flux Cloud fraction
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    :: PRC_MF   ! Convective Mass Flux liquid mixing ratio
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    :: PRI_MF   ! Convective Mass Flux ice mixing ratio
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    :: PWEIGHT_MF_CLOUD ! weight coefficient for the mass-flux cloud
+!
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    :: PRV     ! Water vapor m.r. to adjust
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    :: PRC     ! Cloud water m.r. to adjust
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(INOUT) :: PRVS    ! Water vapor m.r. source
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(INOUT) :: PRCS    ! Cloud water m.r. source
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)    :: PTH     ! Theta to adjust
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(INOUT) :: PTHS    ! Theta source
+LOGICAL,                            INTENT(IN)    :: OCOMPUTE_SRC
+REAL, DIMENSION(MERGE(D%NIJT,0,OCOMPUTE_SRC),&
+                MERGE(D%NKT,0,OCOMPUTE_SRC)), INTENT(OUT)   :: PSRCS   ! Second-order flux
+                                                                       ! s'rc'/2Sigma_s2 at time t+1
+                                                                       ! multiplied by Lambda_3
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(OUT)  ::  PCLDFR  ! Cloud fraction
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(OUT)  ::  PICLDFR ! ice cloud fraction
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(OUT)  ::  PWCLDFR ! water or mixed-phase cloud fraction
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(OUT)  ::  PSSIO   ! Super-saturation with respect to ice in the  
+                                                        ! supersaturated fraction
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(OUT)  ::  PSSIU   ! Sub-saturation with respect to ice in the  
+                                                        ! subsaturated fraction 
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(OUT)  ::  PIFR    ! Ratio cloud ice moist part to dry part
+!
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(INOUT)::  PRIS ! Cloud ice  m.r. at t+1
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)   ::  PRR  ! Rain water m.r. to adjust
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)   ::  PRI  ! Cloud ice  m.r. to adjust
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)   ::  PRS  ! Aggregate  m.r. to adjust
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(IN)   ::  PRG  ! Graupel    m.r. to adjust
+TYPE(TBUDGETDATA_PTR), DIMENSION(KBUDGETS),       INTENT(INOUT)::  TBUDGETS
+INTEGER,                                      INTENT(IN)   ::  KBUDGETS
+REAL, DIMENSION(D%NIJT),       OPTIONAL, INTENT(IN)   ::  PICE_CLD_WGT
+REAL, DIMENSION(D%NIJT,D%NKT), OPTIONAL, INTENT(IN)   ::  PRH  ! Hail       m.r. to adjust
+REAL, DIMENSION(D%NIJT,D%NKT), OPTIONAL, INTENT(OUT)  ::  POUT_RV ! Adjusted value
+REAL, DIMENSION(D%NIJT,D%NKT), OPTIONAL, INTENT(OUT)  ::  POUT_RC ! Adjusted value
+REAL, DIMENSION(D%NIJT,D%NKT), OPTIONAL, INTENT(OUT)  ::  POUT_RI ! Adjusted value
+REAL, DIMENSION(D%NIJT,D%NKT), OPTIONAL, INTENT(OUT)  ::  POUT_TH ! Adjusted value
+REAL, DIMENSION(D%NIJT,D%NKT), OPTIONAL, INTENT(OUT)  ::  PHLC_HRC
+REAL, DIMENSION(D%NIJT,D%NKT), OPTIONAL, INTENT(OUT)  ::  PHLC_HCF
+REAL, DIMENSION(D%NIJT,D%NKT), OPTIONAL, INTENT(OUT)  ::  PHLI_HRI
+REAL, DIMENSION(D%NIJT,D%NKT), OPTIONAL, INTENT(OUT)  ::  PHLI_HCF
+REAL, DIMENSION(D%NIJT,D%NKT), OPTIONAL, INTENT(IN)   ::  PHLC_HRC_MF
+REAL, DIMENSION(D%NIJT,D%NKT), OPTIONAL, INTENT(IN)   ::  PHLC_HCF_MF
+REAL, DIMENSION(D%NIJT,D%NKT), OPTIONAL, INTENT(IN)   ::  PHLI_HRI_MF
+REAL, DIMENSION(D%NIJT,D%NKT), OPTIONAL, INTENT(IN)   ::  PHLI_HCF_MF
+!
+END SUBROUTINE ICE_ADJUST
+!
+END INTERFACE
+!
+END MODULE MODI_ICE_ADJUST
+
+!     ######spl
+       MODULE MODI_RAIN_ICE
+!      ####################
+!
+IMPLICIT NONE
+INTERFACE
+      SUBROUTINE RAIN_ICE ( D, CST, PARAMI, ICEP, ICED, ELECP, ELECD, BUCONF,     &
+                            OELEC, OSEDIM_BEARD, PTHVREFZIKB,                     &
+                            PTSTEP, KRR, PEXN,                                    &
+                            PDZZ, PRHODJ, PRHODREF, PEXNREF, PPABST, PCIT, PCLDFR,&
+                            PICLDFR, PSSIO, PSSIU, PIFR,                 &
+                            PHLC_HRC, PHLC_HCF, PHLI_HRI, PHLI_HCF,               &
+                            PTHT, PRVT, PRCT, PRRT, PRIT, PRST,                   &
+                            PRGT, PTHS, PRVS, PRCS, PRRS, PRIS, PRSS, PRGS,       &
+                            PINPRC, PINPRR, PEVAP3D,                              &
+                            PINPRS, PINPRG, PINDEP, PRAINFR, PSIGS,               &
+                            TBUDGETS, KBUDGETS,                                   &
+                            PQPIT, PQCT, PQRT, PQIT, PQST, PQGT, PQNIT,           &
+                            PQPIS, PQCS, PQRS, PQIS, PQSS, PQGS, PQNIS,           &
+                            PEFIELDW, PLATHAM_IAGGS,                              &
+                            PSEA, PTOWN, PCONC3D,                                 &
+                            PRHT, PRHS, PINPRH, PFPR, PQHT, PQHS                  )
+!
+USE MODD_BUDGET,         ONLY: TBUDGETDATA_PTR, TBUDGETCONF_t
+USE MODD_CST,            ONLY: CST_t
+USE MODD_PARAM_ICE_n,      ONLY: PARAM_ICE_t
+USE MODD_RAIN_ICE_PARAM_n, ONLY: RAIN_ICE_PARAM_t
+USE MODD_RAIN_ICE_DESCR_n, ONLY: RAIN_ICE_DESCR_t
+USE MODD_ELEC_DESCR,     ONLY: ELEC_DESCR_t
+USE MODD_ELEC_PARAM,     ONLY: ELEC_PARAM_t
+USE MODD_DIMPHYEX,       ONLY: DIMPHYEX_t
+!
+IMPLICIT NONE
+!
+TYPE(DIMPHYEX_t),         INTENT(IN)    :: D
+TYPE(CST_t),              INTENT(IN)    :: CST
+TYPE(PARAM_ICE_t),        INTENT(IN)    :: PARAMI
+TYPE(RAIN_ICE_PARAM_t),   INTENT(IN)    :: ICEP
+TYPE(RAIN_ICE_DESCR_t),   INTENT(IN)    :: ICED
+TYPE(ELEC_PARAM_t),       INTENT(IN)    :: ELECP   ! electrical parameters
+TYPE(ELEC_DESCR_t),       INTENT(IN)    :: ELECD   ! electrical descriptive csts
+TYPE(TBUDGETCONF_t),      INTENT(IN)    :: BUCONF
+LOGICAL,                  INTENT(IN)    :: OELEC  ! Switch for cloud electricity
+LOGICAL,                  INTENT(IN)    :: OSEDIM_BEARD  ! Switch for effect of electrical forces on sedim.
+REAL,                     INTENT(IN)    :: PTSTEP  ! Double Time step (single if cold start)
+INTEGER,                  INTENT(IN)    :: KRR     ! Number of moist variable
+!
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(IN)    :: PEXN    ! Exner function
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(IN)    :: PDZZ    ! Layer thikness (m)
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(IN)    :: PRHODJ  ! Dry density * Jacobian
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(IN)    :: PRHODREF! Reference density
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(IN)    :: PEXNREF ! Reference Exner function
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(IN)    :: PPABST  ! absolute pressure at t
+!
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(INOUT) :: PCIT    ! Pristine ice n.c. at t
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(IN)    :: PCLDFR  ! Cloud fraction
+!OCND2
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(IN)    :: PICLDFR ! Ice cloud fraction
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(IN)    :: PSSIO   ! Super-saturation with respect to ice in the supersaturated fraction
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(IN)    :: PSSIU   ! Sub-saturation with respect to ice in the  subsaturated fraction 
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(IN)    :: PIFR    ! Ratio cloud ice moist part to dry part 
+
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(INOUT) :: PHLC_HRC
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(INOUT) :: PHLC_HCF
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(INOUT) :: PHLI_HRI
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(INOUT) :: PHLI_HCF
+!
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(IN)    :: PTHT    ! Theta at time t
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(IN)    :: PRVT    ! Water vapor m.r. at t
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(IN)    :: PRCT    ! Cloud water m.r. at t
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(IN)    :: PRRT    ! Rain water m.r. at t
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(IN)    :: PRIT    ! Pristine ice m.r. at t
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(IN)    :: PRST    ! Snow/aggregate m.r. at t
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(IN)    :: PRGT    ! Graupel/hail m.r. at t
+!
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(INOUT) :: PTHS    ! Theta source
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(INOUT) :: PRVS    ! Water vapor m.r. source
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(INOUT) :: PRCS    ! Cloud water m.r. source
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(INOUT) :: PRRS    ! Rain water m.r. source
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(INOUT) :: PRIS    ! Pristine ice m.r. source
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(INOUT) :: PRSS    ! Snow/aggregate m.r. source
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(INOUT) :: PRGS    ! Graupel m.r. source
+!
+REAL, DIMENSION(D%NIJT), INTENT(OUT)       :: PINPRC! Cloud instant precip
+REAL, DIMENSION(D%NIJT), INTENT(OUT)       :: PINPRR! Rain instant precip
+REAL, DIMENSION(D%NIJT,D%NKT), INTENT(OUT)     :: PEVAP3D! Rain evap profile
+REAL, DIMENSION(D%NIJT), INTENT(OUT)       :: PINPRS! Snow instant precip
+REAL, DIMENSION(D%NIJT), INTENT(OUT)       :: PINPRG! Graupel instant precip
+REAL, DIMENSION(D%NIJT), INTENT(OUT) :: PINDEP  ! Cloud instant deposition
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(OUT) :: PRAINFR !Precipitation fraction
+REAL, DIMENSION(D%NIJT,D%NKT),   INTENT(IN)    :: PSIGS   ! Sigma_s at t
+!
+TYPE(TBUDGETDATA_PTR), DIMENSION(KBUDGETS), INTENT(INOUT) :: TBUDGETS
+INTEGER, INTENT(IN) :: KBUDGETS
+!
+! scalar variables for cloud electricity
+REAL, DIMENSION(MERGE(D%NIJT,0,OELEC),MERGE(D%NKT,0,OELEC)), OPTIONAL, INTENT(IN)    :: PQPIT  ! Positive ion  -
+REAL, DIMENSION(MERGE(D%NIJT,0,OELEC),MERGE(D%NKT,0,OELEC)), OPTIONAL, INTENT(INOUT) :: PQCT   ! Cloud droplet | 
+REAL, DIMENSION(MERGE(D%NIJT,0,OELEC),MERGE(D%NKT,0,OELEC)), OPTIONAL, INTENT(INOUT) :: PQRT   ! Rain          | electric
+REAL, DIMENSION(MERGE(D%NIJT,0,OELEC),MERGE(D%NKT,0,OELEC)), OPTIONAL, INTENT(INOUT) :: PQIT   ! Ice crystals  |  charge 
+REAL, DIMENSION(MERGE(D%NIJT,0,OELEC),MERGE(D%NKT,0,OELEC)), OPTIONAL, INTENT(INOUT) :: PQST   ! Snow          |   at t
+REAL, DIMENSION(MERGE(D%NIJT,0,OELEC),MERGE(D%NKT,0,OELEC)), OPTIONAL, INTENT(INOUT) :: PQGT   ! Graupel       |
+REAL, DIMENSION(MERGE(D%NIJT,0,OELEC),MERGE(D%NKT,0,OELEC)), OPTIONAL, INTENT(IN)    :: PQNIT  ! Negative ion  -
+!
+REAL, DIMENSION(MERGE(D%NIJT,0,OELEC),MERGE(D%NKT,0,OELEC)), OPTIONAL, INTENT(INOUT) :: PQPIS  ! Positive ion  -
+REAL, DIMENSION(MERGE(D%NIJT,0,OELEC),MERGE(D%NKT,0,OELEC)), OPTIONAL, INTENT(INOUT) :: PQCS   ! Cloud droplet | 
+REAL, DIMENSION(MERGE(D%NIJT,0,OELEC),MERGE(D%NKT,0,OELEC)), OPTIONAL, INTENT(INOUT) :: PQRS   ! Rain          | electric
+REAL, DIMENSION(MERGE(D%NIJT,0,OELEC),MERGE(D%NKT,0,OELEC)), OPTIONAL, INTENT(INOUT) :: PQIS   ! Ice crystals  |  charge 
+REAL, DIMENSION(MERGE(D%NIJT,0,OELEC),MERGE(D%NKT,0,OELEC)), OPTIONAL, INTENT(INOUT) :: PQSS   ! Snow          |  source
+REAL, DIMENSION(MERGE(D%NIJT,0,OELEC),MERGE(D%NKT,0,OELEC)), OPTIONAL, INTENT(INOUT) :: PQGS   ! Graupel       |
+REAL, DIMENSION(MERGE(D%NIJT,0,OELEC),MERGE(D%NKT,0,OELEC)), OPTIONAL, INTENT(INOUT) :: PQNIS  ! Negative ion  -
+!
+REAL, DIMENSION(MERGE(D%NIJT,0,OSEDIM_BEARD),MERGE(D%NKT,0,OSEDIM_BEARD)), OPTIONAL, INTENT(IN) :: PEFIELDW ! vertical electric field
+REAL, DIMENSION(MERGE(D%NIJT,0,OELEC),MERGE(D%NKT,0,OELEC)), OPTIONAL, INTENT(IN)    :: PLATHAM_IAGGS ! E Function to simulate
+REAL, INTENT(IN)                :: PTHVREFZIKB ! Reference thv at IKB for electricity
+                                                                                            ! enhancement of IAGGS
+!
+REAL, DIMENSION(D%NIJT), OPTIONAL, INTENT(IN)        :: PSEA ! Sea Mask
+REAL, DIMENSION(D%NIJT), OPTIONAL, INTENT(IN)        :: PTOWN! Fraction that is town
+REAL, DIMENSION(D%NIJT,D%NKT), OPTIONAL, INTENT(IN)     :: PCONC3D    ! Cloud droplet number concentration
+REAL, DIMENSION(D%NIJT,D%NKT), OPTIONAL,  INTENT(IN)    :: PRHT    ! Hail m.r. at t
+REAL, DIMENSION(D%NIJT,D%NKT), OPTIONAL,  INTENT(INOUT) :: PRHS    ! Hail m.r. source
+REAL, DIMENSION(D%NIJT), OPTIONAL, INTENT(OUT)      :: PINPRH! Hail instant precip
+REAL, DIMENSION(D%NIJT,D%NKT,KRR), OPTIONAL, INTENT(OUT)  :: PFPR ! upper-air precipitation fluxes
+REAL, DIMENSION(MERGE(D%NIJT,0,OELEC),MERGE(D%NKT,0,OELEC)), OPTIONAL, INTENT(INOUT) :: PQHT ! Hail electric charge at t
+REAL, DIMENSION(MERGE(D%NIJT,0,OELEC),MERGE(D%NKT,0,OELEC)), OPTIONAL, INTENT(INOUT) :: PQHS ! Hail electric charge source
+!
+END SUBROUTINE RAIN_ICE
+END INTERFACE
+END MODULE MODI_RAIN_ICE
+!     ######spl
+       MODULE MODI_RAIN_ICE_OLD
+!      ####################
+!
+IMPLICIT NONE
+INTERFACE
+      SUBROUTINE RAIN_ICE_OLD (D, CST, PARAMI, ICEP, ICED, BUCONF, TLES,              &
+                               OSEDIC, OCND2, LKOGAN, LMODICEDEP,                     &
+                               HSEDIM, HSUBG_AUCV_RC, OWARM,                          &
+                               KKA, KKU, KKL,                                         &
+                               KSPLITR, PTSTEP, KRR, KSIZE, GMICRO,                   &
+                               PDZZ, PRHODJ, PRHODREF, PEXNREF, PPABST, PCIT, PCLDFR, &
+                               PICLDFR, PSSIO, PSSIU, PIFR,                           &
+                               PTHT, PRVT, PRCT, PRRT, PRIT, PRST,                    &
+                               PRGT, PTHS, PRVS, PRCS, PRRS, PRIS, PRSS, PRGS,        &
+                               PINPRC, PINPRR, PEVAP3D,                               &
+                               PINPRS, PINPRG, PSIGS, PSEA, PTOWN,                    &
+                               OAERONRT, OAEIFN, PCLDROP, PIFNNC,                     &
+                               TBUDGETS, KBUDGETS,                                    &
+                               PICENU, PKGN_ACON, PKGN_SBGR,                          &
+                               PRHT, PRHS, PINPRH, PFPR)
+!
+USE MODD_BUDGET,         ONLY: TBUDGETDATA_PTR, TBUDGETCONF_t
+USE MODD_DIMPHYEX, ONLY: DIMPHYEX_T
+USE MODD_CST, ONLY: CST_T
+USE MODD_PARAM_ICE_n,    ONLY: PARAM_ICE_t
+USE MODD_RAIN_ICE_PARAM_n, ONLY: RAIN_ICE_PARAM_T
+USE MODD_RAIN_ICE_DESCR_n, ONLY: RAIN_ICE_DESCR_T
+USE MODD_LES,              ONLY: TLES_T
+IMPLICIT NONE
+!
+TYPE(DIMPHYEX_T),       INTENT(IN) :: D
+TYPE(CST_T),            INTENT(IN) :: CST 
+TYPE(PARAM_ICE_t),      INTENT(IN) :: PARAMI
+TYPE(RAIN_ICE_PARAM_t), INTENT(IN) :: ICEP
+TYPE(RAIN_ICE_DESCR_t), INTENT(IN) :: ICED
+TYPE(TBUDGETCONF_t),      INTENT(IN)    :: BUCONF
+TYPE(TLES_t),           INTENT(INOUT)   :: TLES          ! modd_les structure
+
+LOGICAL,                  INTENT(IN)    :: OSEDIC ! Switch for droplet sedim.
+LOGICAL,                  INTENT(IN)    :: OCND2  ! Logical switch to separate liquid and ice
+LOGICAL,                  INTENT(IN)    :: LKOGAN ! Logical switch for using Kogan autoconversion of liquid.
+LOGICAL,                  INTENT(IN)    :: LMODICEDEP ! Logical switch for alternative dep/evap of ice
+CHARACTER(LEN=4),         INTENT(IN)    :: HSEDIM ! Sedimentation scheme
+CHARACTER(LEN=4),         INTENT(IN)    :: HSUBG_AUCV_RC ! Switch for rc->rr Subgrid autoconversion
+                                        ! Kind of Subgrid autoconversion method
+LOGICAL,                  INTENT(IN)    :: OWARM   ! .TRUE. allows raindrops to
+                                                   !   form by warm processes
+                                                   !      (Kessler scheme)
+INTEGER,                  INTENT(IN)    :: KKA   !near ground array index
+INTEGER,                  INTENT(IN)    :: KKU   !uppest atmosphere array index
+INTEGER,                  INTENT(IN)    :: KKL   !vert. levels type 1=MNH -1=ARO
+INTEGER,                  INTENT(IN)    :: KSPLITR ! Number of small time step
+                                      ! integration for  rain sedimendation
+REAL,                     INTENT(IN)    :: PTSTEP  ! Double Time step
+                                                   ! (single if cold start)
+INTEGER,                  INTENT(IN)    :: KRR     ! Number of moist variable
+!
+LOGICAL, DIMENSION(D%NIT,D%NKT), INTENT(IN) :: GMICRO    ! Layer thickness (m)
+
+INTEGER, INTENT(IN) :: KSIZE
+!
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PDZZ    ! Layer thickness (m)
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PRHODJ  ! Dry density * Jacobian
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PRHODREF! Reference density
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PEXNREF ! Reference Exner function
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PPABST  ! absolute pressure at t
+!
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(INOUT) :: PCIT    ! Pristine ice n.c. at t
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PCLDFR  ! Cloud fraction
+!
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PTHT    ! Theta at time t
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PRVT    ! Water vapor m.r. at t
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PRCT    ! Cloud water m.r. at t
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PRRT    ! Rain water m.r. at t
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PRIT    ! Pristine ice m.r. at t
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PRST    ! Snow/aggregate m.r. at t
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PRGT    ! Graupel/hail m.r. at t
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PSIGS   ! Sigma_s at t
+! input from aro_adjust / condensation with OCND2, dummy if OCND2 = F
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PICLDFR ! ice cloud fraction
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PSSIO   ! Super-saturation with respect to ice in the
+                                                 ! supersaturated fraction
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PSSIU   ! Sub-saturation with respect to ice in the
+                                                 ! subsaturated fraction
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(IN)    :: PIFR    ! Ratio cloud ice moist part to dry part
+! input from aro_adjust / condensation with OCND2 END.
+!
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(INOUT) :: PTHS    ! Theta source
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(INOUT) :: PRVS    ! Water vapor m.r. source
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(INOUT) :: PRCS    ! Cloud water m.r. source
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(INOUT) :: PRRS    ! Rain water m.r. source
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(INOUT) :: PRIS    ! Pristine ice m.r. source
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(INOUT) :: PRSS    ! Snow/aggregate m.r. source
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(INOUT) :: PRGS    ! Graupel m.r. source
+!
+REAL, DIMENSION(D%NIT),       INTENT(OUT) :: PINPRC! Cloud instant precip
+REAL, DIMENSION(D%NIT),       INTENT(OUT) :: PINPRR! Rain instant precip
+REAL, DIMENSION(D%NIT,D%NKT), INTENT(OUT) :: PEVAP3D! Rain evap profile
+REAL, DIMENSION(D%NIT),       INTENT(OUT) :: PINPRS! Snow instant precip
+REAL, DIMENSION(D%NIT),       INTENT(OUT) :: PINPRG! Graupel instant precip
+REAL, DIMENSION(D%NIT),       INTENT(IN)  :: PSEA ! Sea Mask
+REAL, DIMENSION(D%NIT),       INTENT(IN)  :: PTOWN! Fraction that is town
+! nrt aerosol
+LOGICAL,                          INTENT(IN)  :: OAERONRT ! Switch for nrt aerosols
+LOGICAL,                          INTENT(IN)  :: OAEIFN   ! Switch to activate ice nuclei
+REAL, DIMENSION(D%NIT,D%NKT),     INTENT(IN)  :: PCLDROP  ! Activated Condensation nuclei (CCN) 
+REAL, DIMENSION(D%NIT,D%NKT),     INTENT(IN)  :: PIFNNC   ! Ice freezing nuclei concentration
+!
+TYPE(TBUDGETDATA_PTR), DIMENSION(KBUDGETS), INTENT(INOUT) :: TBUDGETS
+INTEGER, INTENT(IN) :: KBUDGETS
+REAL, DIMENSION(D%NIT), INTENT(IN)            :: PICENU, PKGN_ACON, PKGN_SBGR
+REAL, DIMENSION(D%NIT,D%NKT),   OPTIONAL, INTENT(IN)    :: PRHT    ! Hail m.r. at t
+REAL, DIMENSION(D%NIT,D%NKT),   OPTIONAL, INTENT(INOUT) :: PRHS    ! Hail m.r. source
+REAL, DIMENSION(D%NIT),         OPTIONAL, INTENT(OUT)   :: PINPRH  ! Hail instant precip
+REAL, DIMENSION(D%NIT,D%NKT,KRR), OPTIONAL, INTENT(OUT) :: PFPR    ! upper-air precipitation fluxes
+!
+END SUBROUTINE RAIN_ICE_OLD
+END INTERFACE
+END MODULE MODI_RAIN_ICE_OLD
+MODULE MODI_LIMA
+!
+IMPLICIT NONE
+INTERFACE
+!
+SUBROUTINE LIMA ( LIMAP, LIMAW, LIMAC, LIMAM, TNSV, D, CST, NEBN,         &
+                  ICED, ICEP, ELECD, ELECP,                               &
+                  BUCONF, TBUDGETS, HACTCCN, KBUDGETS, KRR,               &
+                  PTSTEP, OELEC,                                          &
+                  PRHODREF, PEXNREF, PDZZ, PTHVREFZIKB,                   &
+                  PRHODJ, PPABST,                                         &
+                  KCARB, KSOA, KSP, ODUST, OSALT, OORILAM,                &
+                  ODTHRAD, PDTHRAD, PTHT, PRT, PSVT, PW_NU,               &
+                  PAERO,PSOLORG, PMI, PTHS, PRS, PSVS,                    &
+                  PINPRC, PINDEP, PINPRR, PINPRI, PINPRS, PINPRG, PINPRH, &
+                  PEVAP3D, PCLDFR, PICEFR, PPRCFR, PFPR,                  &
+                  PLATHAM_IAGGS, PEFIELDW, PSV_ELEC_T, PSV_ELEC_S         )
+!
+USE MODD_IO,  ONLY: TFILEDATA
+USE MODD_PARAM_LIMA_MIXED, ONLY:PARAM_LIMA_MIXED_T
+USE MODD_PARAM_LIMA_COLD, ONLY:PARAM_LIMA_COLD_T
+USE MODD_PARAM_LIMA_WARM, ONLY:PARAM_LIMA_WARM_T
+USE MODD_PARAM_LIMA, ONLY:PARAM_LIMA_T
+USE MODD_DIMPHYEX, ONLY: DIMPHYEX_T
+USE MODD_RAIN_ICE_DESCR_N,ONLY: RAIN_ICE_DESCR_T
+USE MODD_RAIN_ICE_PARAM_N,ONLY: RAIN_ICE_PARAM_T
+USE MODD_ELEC_PARAM,      ONLY: ELEC_PARAM_T
+USE MODD_ELEC_DESCR,      ONLY: ELEC_DESCR_T
+USE MODD_BUDGET,   ONLY: TBUDGETDATA_PTR, TBUDGETCONF_T
+USE MODD_CST,            ONLY: CST_T
+USE MODD_NEB_N,          ONLY: NEB_T
+USE MODD_NSV, ONLY: NSV_T
+IMPLICIT NONE
+!
+TYPE(PARAM_LIMA_MIXED_T),INTENT(IN)::LIMAM
+TYPE(PARAM_LIMA_COLD_T),INTENT(IN)::LIMAC
+TYPE(PARAM_LIMA_WARM_T),INTENT(IN)::LIMAW
+TYPE(PARAM_LIMA_T),INTENT(IN)::LIMAP
+TYPE(NSV_T),              INTENT(IN)    :: TNSV
+TYPE(DIMPHYEX_T),         INTENT(IN)    :: D
+TYPE(CST_T),              INTENT(IN)    :: CST
+TYPE(NEB_T),              INTENT(IN)    :: NEBN
+TYPE(RAIN_ICE_DESCR_T),   INTENT(IN)    :: ICED
+TYPE(RAIN_ICE_PARAM_T),   INTENT(IN)    :: ICEP
+TYPE(ELEC_PARAM_T),       INTENT(IN)    :: ELECP   ! electrical parameters
+TYPE(ELEC_DESCR_T),       INTENT(IN)    :: ELECD   ! electrical descriptive csts
+TYPE(TBUDGETCONF_T),      INTENT(IN)    :: BUCONF
+CHARACTER(LEN=4),         INTENT(IN)    :: HACTCCN  ! kind of CCN activation
+TYPE(TBUDGETDATA_PTR), DIMENSION(KBUDGETS), INTENT(INOUT) :: TBUDGETS
+INTEGER,                  INTENT(IN)    :: KBUDGETS
+INTEGER,                  INTENT(IN)    :: KRR
+!
+REAL,                     INTENT(IN)    :: PTSTEP     ! Time step
+!
+LOGICAL,                  INTENT(IN)    :: OELEC      ! if true, cloud electrification is activated
+!
+REAL, DIMENSION(D%NIJT, D%NKT),   INTENT(IN)    :: PRHODREF   ! Reference density
+REAL, DIMENSION(D%NIJT, D%NKT),   INTENT(IN)    :: PEXNREF    ! Reference Exner function
+REAL, DIMENSION(D%NIJT, D%NKT),   INTENT(IN)    :: PDZZ       ! Layer thikness (m)
+!
+REAL, DIMENSION(D%NIJT, D%NKT),   INTENT(IN)    :: PRHODJ     ! Dry density * Jacobian
+REAL, DIMENSION(D%NIJT, D%NKT),   INTENT(IN)    :: PPABST     ! absolute pressure at t
+INTEGER,                  INTENT(IN)    :: KCARB, KSOA, KSP ! for array size declarations
+LOGICAL,                  INTENT(IN)    :: ODUST, OSALT, OORILAM
+!
+LOGICAL,                                 INTENT(IN)   :: ODTHRAD    ! Use radiative temperature tendency
+REAL, DIMENSION(MERGE(D%NIJT,0,ODTHRAD), &
+                MERGE(D%NKT,0,ODTHRAD)),   INTENT(IN) :: PDTHRAD   ! dT/dt due to radiation
+REAL, DIMENSION(D%NIJT, D%NKT),   INTENT(IN)    :: PTHT       ! Theta at time t
+REAL, DIMENSION(D%NIJT, D%NKT, KRR), INTENT(IN) :: PRT        ! Mixing ratios at time t
+REAL, DIMENSION(D%NIJT, D%NKT, TNSV%NSV), INTENT(IN) :: PSVT       ! Concentrations at time t
+REAL, DIMENSION(D%NIJT, D%NKT),   INTENT(IN)    :: PW_NU      ! w for CCN activation
+REAL, DIMENSION(D%NIJT, D%NKT ,TNSV%NSV), INTENT(INOUT) :: PAERO    ! Aerosol concentration
+REAL, DIMENSION(D%NIJT, D%NKT, 10),  INTENT(IN)    :: PSOLORG ![%] solubility fraction of soa
+REAL, DIMENSION(D%NIJT, D%NKT, KSP+KCARB+KSOA), INTENT(IN)    :: PMI
+!
+REAL, DIMENSION(D%NIJT, D%NKT),   INTENT(INOUT)    :: PTHS       ! Theta source
+REAL, DIMENSION(D%NIJT, D%NKT, KRR), INTENT(INOUT) :: PRS        ! Mixing ratios sources
+REAL, DIMENSION(D%NIJT, D%NKT, TNSV%NSV), INTENT(INOUT) :: PSVS       ! Concentration sources
+!
+REAL, DIMENSION(D%NIJT),     INTENT(OUT)        :: PINPRC     ! Cloud instant precip
+REAL, DIMENSION(D%NIJT),     INTENT(OUT)        :: PINDEP     ! Cloud droplets deposition
+REAL, DIMENSION(D%NIJT),     INTENT(OUT)        :: PINPRR     ! Rain instant precip
+REAL, DIMENSION(D%NIJT),     INTENT(OUT)        :: PINPRI     ! Rain instant precip
+REAL, DIMENSION(D%NIJT),     INTENT(OUT)        :: PINPRS     ! Snow instant precip
+REAL, DIMENSION(D%NIJT),     INTENT(OUT)        :: PINPRG     ! Graupel instant precip
+REAL, DIMENSION(D%NIJT),     INTENT(OUT)        :: PINPRH     ! Rain instant precip
+REAL, DIMENSION(D%NIJT, D%NKT),   INTENT(OUT)   :: PEVAP3D    ! Rain evap profile
+!
+REAL, DIMENSION(D%NIJT, D%NKT),   INTENT(INOUT) :: PCLDFR     ! Cloud fraction
+REAL, DIMENSION(D%NIJT, D%NKT),   INTENT(INOUT) :: PICEFR     ! Cloud fraction
+REAL, DIMENSION(D%NIJT, D%NKT),   INTENT(INOUT) :: PPRCFR     ! Cloud fraction
+REAL, DIMENSION(D%NIJT, D%NKT, KRR), INTENT(OUT) :: PFPR    ! Precipitation fluxes in altitude
+!
+REAL, DIMENSION(D%NIJT, D%NKT),   OPTIONAL, INTENT(IN)       :: PLATHAM_IAGGS  ! Factor for IAGGS modification due to Efield
+REAL, DIMENSION(D%NIJT, D%NKT),   OPTIONAL, INTENT(IN)       :: PEFIELDW   ! Vertical component of the electric field
+REAL, DIMENSION(D%NIJT, D%NKT, TNSV%NSV), OPTIONAL, INTENT(IN)    :: PSV_ELEC_T ! Charge density at time t
+REAL, DIMENSION(D%NIJT, D%NKT, TNSV%NSV), OPTIONAL, INTENT(INOUT) :: PSV_ELEC_S ! Charge density sources
+!
+REAL, INTENT(IN)                :: PTHVREFZIKB ! Reference thv at IKB for electricity
+END SUBROUTINE LIMA
+END INTERFACE
+END MODULE MODI_LIMA
+!     #############################
+      MODULE MODI_LIMA_ADJUST_SPLIT
+!     #############################
+!
+IMPLICIT NONE
+INTERFACE
+!
+   SUBROUTINE LIMA_ADJUST_SPLIT(LIMAP, LIMAW, TNSV, D, CST, NEBN, TURBN, BUCONF, TBUDGETS, KBUDGETS, &
+                             KRR, HCONDENS, HLAMBDA3,                           &
+                             KCARB, KSOA, KSP, ODUST, OSALT, OORILAM,           &
+                             OSUBG_COND, OSIGMAS, PTSTEP, PSIGQSAT,             &
+                             PRHODREF, PRHODJ, PEXNREF, PSIGS, OMFCONV, PMFCONV,&
+                             PPABST, PZZ, ODTHRAD, PDTHRAD, PW_NU,              &
+                             PRT, PRS, PSVT, PSVS,                              &
+                             HACTCCN, PAERO,PSOLORG, PMI,                       &
+                             PTHS, OCOMPUTE_SRC, PSRCS, PCLDFR, PICEFR,         &
+                             PRC_MF, PRI_MF, PCF_MF)
+!
+!USE MODD_IO,    ONLY: TFILEDATA
+USE MODD_DIMPHYEX,       ONLY: DIMPHYEX_T
+USE MODD_BUDGET,         ONLY: TBUDGETDATA_PTR, TBUDGETCONF_T
+USE MODD_CST,            ONLY: CST_T
+USE MODD_NSV, ONLY: NSV_T
+USE MODD_NEB_N,            ONLY: NEB_T
+USE MODD_TURB_N,            ONLY: TURB_T
+USE MODD_PARAM_LIMA, ONLY: PARAM_LIMA_T
+USE MODD_PARAM_LIMA_WARM, ONLY: PARAM_LIMA_WARM_T
+IMPLICIT NONE
+!
+TYPE(PARAM_LIMA_T),INTENT(IN)::LIMAP
+TYPE(PARAM_LIMA_WARM_T),INTENT(IN)::LIMAW
+TYPE(NSV_T),              INTENT(IN)    :: TNSV
+TYPE(DIMPHYEX_T),         INTENT(IN)    :: D
+TYPE(CST_T),              INTENT(IN)    :: CST
+TYPE(NEB_T),              INTENT(IN)    :: NEBN
+TYPE(TURB_T),             INTENT(IN)    :: TURBN
+TYPE(TBUDGETCONF_T),      INTENT(IN)    :: BUCONF
+TYPE(TBUDGETDATA_PTR), DIMENSION(KBUDGETS), INTENT(INOUT) :: TBUDGETS
+INTEGER, INTENT(IN) :: KBUDGETS
+!
+INTEGER,                  INTENT(IN)   :: KRR        ! Number of moist variables
+CHARACTER(LEN=80),        INTENT(IN)   :: HCONDENS
+CHARACTER(LEN=4),         INTENT(IN)   :: HLAMBDA3   ! formulation for lambda3 coeff
+LOGICAL,                  INTENT(IN)   :: OSUBG_COND ! Switch for Subgrid
+                                                     ! Condensation
+LOGICAL,                  INTENT(IN)   :: OSIGMAS    ! Switch for Sigma_s:
+                                                     ! use values computed in CONDENSATION
+                                                     ! or that from turbulence scheme
+REAL,                     INTENT(IN)   :: PTSTEP     ! Time step
+REAL, DIMENSION(D%NIJT),  INTENT(IN)   :: PSIGQSAT   ! coeff applied to qsat variance contribution
+!
+REAL, DIMENSION(D%NIJT, D%NKT),   INTENT(IN)   ::  PRHODREF  ! Dry density of the 
+                                                             ! reference state
+REAL, DIMENSION(D%NIJT, D%NKT),   INTENT(IN)   ::  PRHODJ    ! Dry density * Jacobian
+REAL, DIMENSION(D%NIJT, D%NKT),   INTENT(IN)   ::  PEXNREF   ! Reference Exner function
+REAL, DIMENSION(MERGE(D%NIJT,0,NEBN%LSUBG_COND), &
+                MERGE(D%NKT,0,NEBN%LSUBG_COND)),   INTENT(IN)   ::  PSIGS     ! Sigma_s at time t
+LOGICAL,                                  INTENT(IN)    ::  OMFCONV ! T to use PMFCONV
+REAL, DIMENSION(MERGE(D%NIJT,0,OMFCONV), &
+                MERGE(D%NKT,0,OMFCONV)),   INTENT(IN)   ::  PMFCONV   ! 
+REAL, DIMENSION(D%NIJT, D%NKT),   INTENT(IN)   ::  PPABST    ! Absolute Pressure at t     
+REAL, DIMENSION(D%NIJT, D%NKT),   INTENT(IN)   ::  PZZ       !     
+LOGICAL,                                INTENT(IN)   :: ODTHRAD    ! Use radiative temperature tendency
+REAL, DIMENSION(MERGE(D%NIJT,0,ODTHRAD), &
+                MERGE(D%NKT,0,ODTHRAD)),   INTENT(IN) :: PDTHRAD   ! Radiative temperature tendency
+REAL, DIMENSION(D%NIJT, D%NKT),   INTENT(IN)    :: PW_NU     ! updraft velocity used for
+INTEGER,                  INTENT(IN)    :: KCARB, KSOA, KSP ! for array size declarations
+LOGICAL,                  INTENT(IN)    :: ODUST, OSALT, OORILAM
+REAL, DIMENSION(D%NIJT, D%NKT ,TNSV%NSV), INTENT(INOUT) :: PAERO    ! Aerosol concentration
+REAL, DIMENSION(D%NIJT, D%NKT, 10),  INTENT(IN)    :: PSOLORG ![%] solubility fraction of soa
+REAL, DIMENSION(D%NIJT, D%NKT, KSP+KCARB+KSOA), INTENT(IN)    :: PMI
+CHARACTER(LEN=4),         INTENT(IN)    :: HACTCCN  ! kind of CCN activation
+!
+REAL, DIMENSION(D%NIJT, D%NKT, KRR), INTENT(IN)    :: PRT       ! m.r. at t
+!
+REAL, DIMENSION(D%NIJT, D%NKT, KRR), INTENT(INOUT) :: PRS       ! m.r. source
+!
+REAL, DIMENSION(D%NIJT, D%NKT, TNSV%NSV), INTENT(IN)    :: PSVT ! Concentrations at time t
+!
+REAL, DIMENSION(D%NIJT, D%NKT, TNSV%NSV), INTENT(INOUT) :: PSVS ! Concentration sources
+!
+REAL, DIMENSION(D%NIJT, D%NKT),   INTENT(INOUT) :: PTHS      ! Theta source
+!
+LOGICAL,                                      INTENT(IN)    :: OCOMPUTE_SRC ! T to comput PSRCS
+REAL, DIMENSION(MERGE(D%NIJT,0,OCOMPUTE_SRC), &
+                MERGE(D%NKT,0,OCOMPUTE_SRC)), INTENT(OUT)   :: PSRCS     ! Second-order flux
+                                                                         ! s'rc'/2Sigma_s2 at time t+1
+                                                                         ! multiplied by Lambda_3
+REAL, DIMENSION(D%NIJT, D%NKT),     INTENT(OUT) :: PCLDFR    ! Cloud fraction          
+REAL, DIMENSION(D%NIJT, D%NKT),     INTENT(OUT) :: PICEFR    ! Cloud fraction          
+REAL, DIMENSION(D%NIJT, D%NKT),     INTENT(IN)  :: PRC_MF! Convective Mass Flux liquid mixing ratio
+REAL, DIMENSION(D%NIJT, D%NKT),     INTENT(IN)  :: PRI_MF! Convective Mass Flux ice mixing ratio
+REAL, DIMENSION(D%NIJT, D%NKT),     INTENT(IN)  :: PCF_MF! Convective Mass Flux Cloud fraction 
+!
+END SUBROUTINE LIMA_ADJUST_SPLIT
+END INTERFACE
+END MODULE MODI_LIMA_ADJUST_SPLIT
+!-----------------------------------------------------------------
+!#######################################
+MODULE MODE_SET_CONC_LIMA
+  IMPLICIT NONE
+!CONTAINS
+!  SUBROUTINE SET_CONC_LIMA_DUMMY()
+!  END SUBROUTINE SET_CONC_LIMA_DUMMY
+END MODULE MODE_SET_CONC_LIMA
